@@ -1,8 +1,3 @@
----
-title: Reinforcement Learning
-
----
-
 # Unifying My Reinforcement Learning Understanding
 
 
