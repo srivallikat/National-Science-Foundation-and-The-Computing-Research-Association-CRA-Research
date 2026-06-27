@@ -1,8 +1,3 @@
----
-title: Cosmos Model
-
----
-
 ![cosmos3_training_vertical](https://hackmd.io/_uploads/Hk5tb9nGMg.png)
 use process:
 ![cosmos3_world_model_loop](https://hackmd.io/_uploads/BkDObc3Mfl.png)
