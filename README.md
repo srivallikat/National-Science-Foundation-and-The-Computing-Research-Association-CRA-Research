@@ -1,13 +1,192 @@
 # AI Learning Notes
 
-Welcome! This repository is a collection of my written notes as I learn modern artificial intelligence from the ground up. Rather than being a code repository, this is intended to serve as a structured knowledge base documenting my understanding of AI—from the mathematical foundations of machine learning to today's state-of-the-art models and tools.
+Welcome! This repository is a collection of my written notes as I learn modern artificial intelligence from the ground up. Rather than being a code repository, this serves as a structured knowledge base documenting my understanding of AI—from the mathematical foundations of machine learning to modern reinforcement learning, deep learning, transformers, vision-language models, and large language models.
 
-The goal of this repository is to organize my learning, create a reference I can revisit throughout future research and projects, and share explanations that may also help others who are studying AI. As I continue learning, these notes will be updated with new topics, clearer explanations, and additional resources.
+The goal of this repository is to organize my learning, create a reference I can revisit throughout future research and projects, and share explanations that may also help others studying artificial intelligence. As I continue learning, these notes will grow alongside my research with new topics, improved explanations, mathematical derivations, and additional resources.
+
+---
+
+# 🚨 Current Research Project
+
+## Vision-Language Model Preferences for Reward Function Engineering
+
+**Implementation Repository:**  
+**https://github.com/srivallikat/VLM_Preferences_RewardFunction_Engr**
+
+While this repository focuses on documenting my AI learning journey, my current research focuses on developing a novel approach to **reward engineering for reinforcement learning using Vision-Language Models (VLMs).**
+
+Current preference-based reinforcement learning methods that leverage Vision-Language Models almost exclusively learn reward functions using **Bradley–Terry pairwise preference modeling.** My research investigates a novel extension by replacing traditional pairwise preference learning with **Plackett–Luce ranking models**, allowing reward functions to be learned from rankings over multiple trajectory segments rather than isolated comparisons.
+
+The hypothesis is that richer ranking information may produce more informative supervisory signals, leading to improved learned reward functions and more sample-efficient reinforcement learning.
+
+This work combines concepts from reinforcement learning, computer vision, deep learning, statistical learning, and Vision-Language Models into a complete research pipeline for robotic reward engineering.
+
+---
+
+## Project Highlights
+
+Unlike many research reproductions, this project implements the complete reward-learning pipeline from the ground up, including:
+
+- Custom implementation of **Soft Actor-Critic (SAC)** for continuous-control reinforcement learning
+- Custom **PyTorch CNN reward model** trained from VLM-generated preferences
+- Implementation of both **Bradley–Terry** and **Plackett–Luce** preference learning objectives for comparison
+- Integration with a **Vision-Language Model API** to automatically generate trajectory preferences
+- Replay-buffer reward relabeling inspired by recent VLM reward-learning literature
+- Warmup strategy for addressing the cold-start problem in preference learning
+- Modular reinforcement learning framework with separate training, evaluation, reward modeling, and environment components
+- Custom Gymnasium robotic environment
+- End-to-end experimentation pipeline for comparing preference-learning methods
+
+This project serves as the practical implementation of many of the concepts documented throughout these notes and represents my current research in reinforcement learning, Vision-Language Models, and robotic reward engineering.
+
+---
+
+# Technical Skills Demonstrated
+
+## Reinforcement Learning
+
+- Reinforcement Learning (RL)
+- Deep Reinforcement Learning
+- Soft Actor-Critic (SAC)
+- Off-Policy Reinforcement Learning
+- Continuous Control
+- Replay Buffers
+- Bellman-Based Learning
+- Reward Function Engineering
+- Preference-Based Reinforcement Learning (PbRL)
+- Policy Learning
+- Experience Replay
+- Reward Relabeling
+- Hyperparameter Tuning
+- Reinforcement Learning Evaluation
+
+---
+
+## Deep Learning
+
+- PyTorch
+- Neural Network Design
+- Convolutional Neural Networks (CNNs)
+- Image-Based Reward Modeling
+- Feature Extraction
+- Automatic Differentiation (Autograd)
+- Backpropagation
+- Gradient-Based Optimization
+- Adam Optimizer
+- Cross-Entropy Loss
+- GPU / CUDA Training
+- Tensor Operations
+- Batch Training
+
+---
+
+## Vision-Language Models
+
+- Vision-Language Models (VLMs)
+- Multimodal AI
+- Vision-Based Preference Learning
+- Preference Annotation using VLMs
+- Prompt Engineering
+- Automated Preference Label Generation
+- Image Understanding
+- API Integration
+- Robust API Error Handling
+
+---
+
+## Preference Learning & Statistical Modeling
+
+- Bradley–Terry Preference Models
+- Plackett–Luce Ranking Models
+- Maximum Likelihood Estimation (MLE)
+- Pairwise Preference Learning
+- K-Wise Ranking
+- Ranking Loss Functions
+- Statistical Learning
+- Preference Dataset Construction
+- Probability Theory
+
+---
+
+## Computer Vision
+
+- Image Preprocessing
+- RGB Rendering Pipelines
+- Image Normalization
+- Feature Extraction
+- PIL (Python Imaging Library)
+
+---
+
+## Scientific Computing
+
+- Python
+- NumPy
+- Matplotlib
+- Numerical Computing
+- Scientific Experimentation
+
+---
+
+## Reinforcement Learning Environment Design
+
+- Gymnasium
+- Custom RL Environment Development
+- Continuous Action Spaces
+- Observation Space Design
+- Reward Function Design
+- Robotics Task Simulation
+- Safety-Constrained Reinforcement Learning
+
+---
+
+## Research & Software Engineering
+
+- AI Research Implementation
+- Reading and Implementing State-of-the-Art Research Papers
+- Modular Software Architecture
+- Experiment Logging
+- Performance Benchmarking
+- Evaluation Pipelines
+- Reproducible Machine Learning Experiments
+
+---
+
+## Repository Contents
+
+This repository contains my personal notes covering topics including:
+
+- Linear Algebra for Machine Learning
+- Calculus for Deep Learning
+- Probability & Statistics
+- Neural Networks
+- Convolutional Neural Networks
+- Reinforcement Learning
+- Policy Gradient Methods
+- Actor-Critic Algorithms
+- Soft Actor-Critic
+- Transformers
+- Large Language Models
+- Vision-Language Models
+- Vision-Language-Action Models
+- Reward Engineering
+- Preference Learning
+- AI Safety
+- Robotics
+- Current AI Research Papers
+
+These notes are continually updated as I continue learning through coursework, independent study, and research.
+
+---
 
 ## Acknowledgements
 
-A special thank you to **3Blue1Brown** and **Welch Labs**, whose educational content has been invaluable in helping me build an intuition for many of the mathematical concepts behind AI. Many of the figures and visualizations used throughout these notes are inspired by or adapted from their work, and I encourage anyone interested in mathematics, machine learning, or AI to check out their content.
+A special thank you to **3Blue1Brown** and **Welch Labs**, whose educational content has been invaluable in helping me build intuition for many of the mathematical concepts behind artificial intelligence. Many of the figures and visualizations throughout these notes are inspired by or adapted from their work. I highly recommend their content to anyone interested in mathematics, machine learning, or AI.
+
+---
 
 ## Disclaimer
 
 These notes are intended for educational purposes and reflect my ongoing learning journey. While I strive for accuracy, there may occasionally be mistakes or oversimplifications. If you notice an error or have suggestions for improvement, feel free to open an issue or submit a pull request.
+
+Happy learning! 🚀
