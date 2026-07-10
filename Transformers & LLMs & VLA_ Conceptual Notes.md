@@ -1,8 +1,3 @@
----
-title: 'Transformers & LLMs & VLA: Conceptual Notes'
-
----
-
 # Transformers & LLMs: Conceptual Notes
 
 ---
@@ -27,13 +22,15 @@ The reason a word might encode another word as part of attention is that — for
 
 HAHA I really like how they called it "attention" now. That making of one column having info about the other columns near it — it's like a projection or an addition of two vectors, but the key thing is that even the further-away ones can impact it, *but only up to a certain number of words*. So calling it attention, for that reason, is actually very nice.
 
-![image](https://hackmd.io/_uploads/HkDI7KNWGg.png)
+
 
 ### Queries, Keys, and Values
 
 A query asks an all-encompassing question suitable for the word. A key gives an answer. And if that dot product between the query and key is high, it signals that the query got an answer — meaning those two vectors are near each other.
 
 For example, the word "creature" might ask: *"are there any adjectives near me?"* The word "fluffy" might have a key that signals *"I'm an adjective."* When the dot product between creature's query and fluffy's key is high, we know the question was answered.
+![image](https://hackmd.io/_uploads/SyBUXi4Zze.png)
+
 
 But the answer isn't just yes or no — it's a *value vector*. The value vector is what we add to the word to encode that meaning. Like "gender" could be a direction that gets added to make something something else. Those weights allow the model to adjust to that.
 
@@ -41,8 +38,9 @@ And here's why scaling by the dot product makes sense: the dot product tells us 
 
 So to sum it up: for each word, depending on how much each other word's key matched its query, we add up those weighted value vectors, then add the sum to the original word. That's the attention update. And this gives us our new, context-enriched list of word representations — the attention output.
 
+
 ![image](https://hackmd.io/_uploads/B1SD8XUZMe.png)
-![image](https://hackmd.io/_uploads/H1DDv7Ibzg.png)
+
 
 ### The Size Constraint
 
@@ -57,9 +55,9 @@ For the final layer, since we want probabilities over 50,000 words, we need our 
 We only allow a token to attend to tokens that come *before* it, not after — because we're simultaneously training the model to guess each next word in the sequence. Since we already know all the words in the training text, we can ask "can the model predict the word after token 1? After token 2? After token 3?" all at once. One training example becomes multiple training examples, which is why we guess all possible next words throughout the sequence rather than just the final one.
 
 The masking is what makes this safe — attention of encoding meanings into a word for the next-word guess only applies forward, not backward, so we can train simultaneously across the whole sequence.
-
-![image](https://hackmd.io/_uploads/S1h4uoV-Ge.png)
 ![image](https://hackmd.io/_uploads/rk98654Wze.png)
+![image](https://hackmd.io/_uploads/S1h4uoV-Ge.png)
+
 
 ### A Note on Training Bias
 
@@ -68,23 +66,25 @@ One subtle issue: if AI-generated text is used as training data, we're retrofitt
 ### Self-Attention vs. Cross-Attention
 
 - **Self-attention:** each token attends to other tokens in the *same* sequence
-- **Cross-attention:** tokens from one sequence attend to tokens from a *different* sequence — used in translation (our language → another language), or in vision-language models where text tokens attend to image patches
+- **Cross-attention:** tokens from one sequence attend to tokens from a *different* sequence — used in translation (our language → another language), or in vision-language models where text tokens attend to image patches. "I do not want to pet it" will never insert context from itself into its words, which is why self attention is desirable even in translation.
 
-![image](https://hackmd.io/_uploads/HJ8cGE8Zzg.png)
+
 ![image](https://hackmd.io/_uploads/S10IRXIZMg.png)
 
 ### Multi-Head Attention
 
-From a single attention head, we get suggested changes to each word. If we do multiple heads, we get multiple sets of suggested changes. Each head uses different Q/K/V weight matrices, so each head can specialize in probing for different things — one might look for adjective-noun relationships, another for coreference, another for something else entirely.
+From a single attention head, we get suggested changes to each word.
+one word change:![image](https://hackmd.io/_uploads/SkASQEUbGx.png)
+multiple word change in ONE attention head:![image](https://hackmd.io/_uploads/H1DDv7Ibzg.png) If we do multiple heads, we get multiple sets of suggested changes. Each head uses different Q/K/V weight matrices, so each head can specialize in probing for different things — one might look for adjective-noun relationships, another for coreference, another for something else entirely.
 
 For all of them, you get the sum of (value × key·query dot product) added to each word, computed once per head. Then we do that multiple times with different weights.
 
-![image](https://hackmd.io/_uploads/SkASQEUbGx.png)
+
 ![image](https://hackmd.io/_uploads/HJ8cGE8Zzg.png)
 
 For backprop through multi-head attention: if I know what aspects of E8 (the final word vector) should have been higher or lower, and I know how many additions were made to each part of it from the value updates, then I know exactly what to adjust. I go to each of those value, key, and query weights that contributed and nudge them accordingly. And the value vectors came from separate word conversions too, which also tells us how to change those original word vectors.
 
-![image](https://hackmd.io/_uploads/rygkZQDbzx.png)
+
 
 ### What Each Part of the Attention Output Encodes
 
@@ -106,9 +106,11 @@ This is also sometimes called the MLP (multi-layer perceptron) sublayer. The way
 
 The Micheal Jordan example is great here. Best case, if we have both the "Michael" and "Jordan" vectors, we get a result of 2. With a bias of -1, that becomes 1 — positive, so ReLU activates. If only one was present, we'd get 1 - 1 = 0, which is neutral. If neither, negative, which ReLU kills to 0. So it becomes an AND gate — *both* Michael *and* Jordan have to be present for this to fire. And then the second layer adds the "basketball" meaning encoding. If Michael Jordan wasn't present at all, nothing gets added. That's exactly the right behavior.
 
+
 ![image](https://hackmd.io/_uploads/SJJprQwZMg.png)
-![image](https://hackmd.io/_uploads/rk8RpmUZzg.png)
-![image](https://hackmd.io/_uploads/HyqzWNwWMe.png)
+![image](https://hackmd.io/_uploads/rygkZQDbzx.png)
+
+
 
 The same framework applies more generally: the first weight layer checks if something is there, and the second weight layer tells us what to add to our original encoding because of it. We're going from our word encoding, up to a higher-dimensional space to do the checking, then back down to the original size to add the update.
 
@@ -118,7 +120,7 @@ Here's a beautiful insight. In a 3-dimensional space, you can only have up to 3 
 
 Why does this matter? Because the first layer of the feed-forward network is asking "does this feature exist?" using AND gates across rows. If you have more orthogonal directions available, you can use *more rows* to answer the same question.
 
-For example, let's say we want to detect whether Michael Jordan is present. Instead of being forced to capture that with just one row (the "Michael + Jordan" gate), if we have more near-orthogonal directions, we can have multiple rows probing for the same phenomenon from different angles — "Michael + Jordan," "Michael + his jersey number," "Jordan + basketball," whatever. More rows means more gates helping confirm or deny the presence of a concept, which means we can encode more things reliably even in a fixed-size model.
+For example, let's say we want to detect whether Michael Jordan is present. Instead of being forced to capture that with just one row (the "Michael + Jordan" gate), if we have more near-orthogonal directions, we can have multiple rows probing for the same phenomenon from different angles — "Michael + Jordan," "Michael + his jersey number," "Jordan + basketball," whatever. More rows means more gates helping confirm or deny the presence of a concept, which means we can encode more things reliably even in a fixed-size model.![image](https://hackmd.io/_uploads/HyqzWNwWMe.png)
 
 So superposition allows the model to store far more "concepts" than it has raw dimensions, by packing them into slightly non-orthogonal directions. And the 89° and 91° directions — things that are *almost* perpendicular — can still encode a direction that gets checked meaningfully. This is why large embedding dimensions matter so much.
 
@@ -128,7 +130,7 @@ So superposition allows the model to store far more "concepts" than it has raw d
 
 ## 4. Unembedding & Softmax — Getting to Word Probabilities
 
-At the end of the transformer, we take the final token's vector and multiply it by an **unembedding matrix** to get a vector of length 50,000 — one score per word in the vocabulary. Each neuron in that output represents a word, and its activation number is meant to represent the probability of that word being the next one.
+At the end of the transformer, we take the final token's vector and multiply it by an **unembedding matrix** to get a vector row of length 50,000 — one score per word in the vocabulary. Each neuron in that output represents a word, and its activation number is meant to represent the probability of that word being the next one.![image](https://hackmd.io/_uploads/HkDI7KNWGg.png)
 
 Then we run it through **softmax** to convert those raw scores into something that sums to 1. The way softmax works: take e to the power of each score, add them all up, and divide each one by that sum. So each value becomes a fraction of the total — a probability-like distribution.
 
@@ -161,8 +163,7 @@ For the feed-forward: same logic. If the activation was wrong, nudge the weights
 
 For the embedding matrix: backprop gives us suggested nudges on the initial word vectors, which is what causes the geometry of the embedding space to become meaningful over time — words that appear in similar contexts drifting toward each other, and directions like gender or plurality emerging.
 
-![image](https://hackmd.io/_uploads/SyBUXi4Zze.png)
-![image](https://hackmd.io/_uploads/SyXX8oNWMx.png)
+
 
 ---
 
