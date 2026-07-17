@@ -8,19 +8,6 @@ The goal of this repository is to organize my learning, create a reference I can
 
 # 🚨 Current Research Project
 
-## Vision-Language Model Preferences for Reward Function Engineering
-
-**Implementation Repository:**  
-**https://github.com/srivallikat/VLM_Preferences_RewardFunction_Engr**
-
-While this repository focuses on documenting my AI learning journey, my current research focuses on developing a novel approach to **reward engineering for reinforcement learning using Vision-Language Models (VLMs).**
-
-Current preference-based reinforcement learning methods that leverage Vision-Language Models almost exclusively learn reward functions using **Bradley–Terry pairwise preference modeling.** My research investigates a novel extension by replacing traditional pairwise preference learning with **Plackett–Luce ranking models**, allowing reward functions to be learned from rankings over multiple trajectory segments rather than isolated comparisons.
-
-The hypothesis is that richer ranking information may produce more informative supervisory signals, leading to improved learned reward functions and more sample-efficient reinforcement learning.
-
-This work combines concepts from reinforcement learning, computer vision, deep learning, statistical learning, and Vision-Language Models into a complete research pipeline for robotic reward engineering.
-
 ---
 
 ## Project Highlights
