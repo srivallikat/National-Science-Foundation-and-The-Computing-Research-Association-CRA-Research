@@ -8,25 +8,7 @@ The goal of this repository is to organize my learning, create a reference I can
 
 # 🚨 Current Research Project
 
----
 
-## Project Highlights
-
-Unlike many research reproductions, this project implements the complete reward-learning pipeline from the ground up, including:
-
-- Custom implementation of **Soft Actor-Critic (SAC)** for continuous-control reinforcement learning
-- Custom **PyTorch CNN reward model** trained from VLM-generated preferences
-- Implementation of both **Bradley–Terry** and **Plackett–Luce** preference learning objectives for comparison
-- Integration with a **Vision-Language Model API** to automatically generate trajectory preferences
-- Replay-buffer reward relabeling inspired by recent VLM reward-learning literature
-- Warmup strategy for addressing the cold-start problem in preference learning
-- Modular reinforcement learning framework with separate training, evaluation, reward modeling, and environment components
-- Custom Gymnasium robotic environment
-- End-to-end experimentation pipeline for comparing preference-learning methods
-
-This project serves as the practical implementation of many of the concepts documented throughout these notes and represents my current research in reinforcement learning, Vision-Language Models, and robotic reward engineering.
-
----
 
 # Technical Skills Demonstrated
 
